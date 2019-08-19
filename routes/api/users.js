@@ -6,6 +6,10 @@ const passport = require("passport");
 const keys = require("../../config/keys");
 const router = express.Router();
 
+//Load Input Validation
+const validateRegisterInput = require("../../validation/register");
+const validateLoginInpur = require("../../validation/login");
+
 //Load Models
 const User = require("../../models/User");
 
@@ -20,40 +24,52 @@ router.get("/test", (req, res) =>
 // @description User registration route
 // @access Public
 router.post("/register", (req, res) => {
-  User.findOne({ email: req.body.email }).then(user => {
-    if (user) {
-      return res.status(400).json({ email: "Email already exists" });
-    } else {
-      const avatar = gravatar.url(req.body.email, {
-        s: "200", // Size
-        r: "pg", // Rating
-        d: "mm" // Default avatar
-      });
-      const newUser = new User({
-        name: req.body.name,
-        email: req.body.email,
-        avatar,
-        password: req.body.password
-      });
+  const { errors, isValid } = validateRegisterInput(req.body);
 
-      // encrypting password and saving data to the database
-      bcryptjs.genSalt(10, (err, salt) => {
-        if (err) throw err;
-        bcryptjs.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser
-            .save()
-            .then(user => {
-              res.json(user);
-            })
-            .catch(err => {
-              console.log(err);
-            });
+  //Check validation
+  if (!isValid) {
+    res.status(400).json({ errors });
+  }
+
+  User.findOne({ email: req.body.email })
+    .then(user => {
+      if (user) {
+        errors.email = "Email already exists";
+        return res.status(400).json(errors);
+      } else {
+        const avatar = gravatar.url(req.body.email, {
+          s: "200", // Size
+          r: "pg", // Rating
+          d: "mm" // Default avatar
         });
-      });
-    }
-  });
+        const newUser = new User({
+          name: req.body.name,
+          email: req.body.email,
+          avatar,
+          password: req.body.password
+        });
+
+        // encrypting password and saving data to the database
+        bcryptjs.genSalt(10, (err, salt) => {
+          if (err) throw err;
+          bcryptjs.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => {
+                res.json(user);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          });
+        });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 // @route GET api/users/login
@@ -61,13 +77,23 @@ router.post("/register", (req, res) => {
 // @access Public
 
 router.post("/login", (req, res) => {
+  const { errors, isValid } = validateLoginInpur(req.body);
+
+  //Check validation
+  if (!isValid) {
+    res.status(400).json({ errors });
+  }
+
   const email = req.body.email;
   const password = req.body.password;
 
   //Find user by email
   User.findOne({ email }).then(user => {
     //Check for user
-    if (!user) res.status(400).json({ email: "User not found" });
+    if (!user) {
+      errors.email = "Email not found";
+      return res.status(400).json(errors);
+    }
 
     //Check password
     bcryptjs.compare(password, user.password).then(isMatch => {
@@ -86,7 +112,8 @@ router.post("/login", (req, res) => {
           }
         );
       } else {
-        res.status(400).json({ password: "Incorrect Password" });
+        errors.password = "Password is incorrect";
+        return res.status(400).json(errors);
       }
     });
   });
