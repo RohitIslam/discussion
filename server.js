@@ -1,15 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const passport = require("passport");
 
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
 const posts = require("./routes/api/posts");
 
 const app = express();
-
-//Body parser middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 
 // database connection start
 
@@ -27,6 +24,18 @@ app.get("/", (req, res) => {
 });
 
 // database connection end
+
+//Middlewares start
+
+//Body parser middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+//Passport Middleware
+app.use(passport.initialize());
+require("./config/passport")(passport);
+
+//Middlewares end
 
 //Use Routes
 app.use("/api/users", users);
