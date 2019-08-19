@@ -7,6 +7,10 @@ const posts = require("./routes/api/posts");
 
 const app = express();
 
+//Body parser middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 // database connection start
 
 //DB Config
