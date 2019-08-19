@@ -8,6 +8,7 @@ const ProfileSchema = Schema({
     type: Schema.Types.ObjectId,
     required: true
   },
+  // handle is for SEO
   handle: {
     type: String,
     required: true,
