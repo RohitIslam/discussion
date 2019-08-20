@@ -12,6 +12,8 @@ const validateEducationInput = require("../../validation/education");
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
 
+// GET API START
+
 // @route GET api/profile/test
 // @description Tests profile route
 // @access Public
@@ -98,6 +100,10 @@ router.get("/user/:user_id", (req, res) => {
       res.status(400).json({ error: "There is no profile for this user" })
     );
 });
+
+// GET API END
+
+// POST API START
 
 // @route POST api/profile
 // @description Create or Edit user profile
@@ -246,5 +252,39 @@ router.post(
       .catch(err => res.status(400).json(err));
   }
 );
+
+// POST API END
+
+// DELETE API START
+
+// @route DELETE api/profile/experience/experience_id
+// @description Add experience to profile
+// @access Private
+
+router.delete(
+  "/experience/:experience_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        //get remove index
+        const removeIndex = profile.experience
+          .map(item => item.id)
+          .indexOf(req.params.experience_id);
+
+        //Splice out of array
+        profile.experience.splice(removeIndex, 1);
+
+        //save
+        profile
+          .save()
+          .then(profile => res.json(profile))
+          .catch(err => res.status(400).json(err));
+      })
+      .catch(err => res.status(404).json(err));
+  }
+);
+
+// DELETE API END
 
 module.exports = router;
