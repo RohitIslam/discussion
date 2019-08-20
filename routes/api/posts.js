@@ -23,9 +23,10 @@ router.get("/test", (req, res) =>
 // @description get all posts
 // @access Public
 
-router.get("/all", (req, res) => {
+router.get("/", (req, res) => {
   const errors = {};
   Post.find()
+    .sort({ date: -1 }) //latest posts will appear first
     .populate("user", ["name", "avatar"])
     .then(posts => {
       if (!posts) {
@@ -34,7 +35,7 @@ router.get("/all", (req, res) => {
       }
       res.json(posts);
     })
-    .catch(err => res.status(400).json({ error: "here are no posts" }));
+    .catch(err => res.status(400).json({ error: "There are no posts" }));
 });
 
 // GET API END
