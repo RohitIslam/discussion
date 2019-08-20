@@ -207,10 +207,8 @@ router.post(
         };
         // Add to experience array
         profile.experience.unshift(newExperience);
-        profile
-          .save()
-          .then(profile => res.json(profile))
-          .catch(err => res.status(400).json(err));
+        profile.save().then(profile => res.json(profile));
+        // .catch(err => res.status(400).json(err));
       })
       .catch(err => res.status(400).json(err));
   }
@@ -244,10 +242,8 @@ router.post(
         };
         // Add to education array
         profile.education.unshift(newEducation);
-        profile
-          .save()
-          .then(profile => res.json(profile))
-          .catch(err => res.status(400).json(err));
+        profile.save().then(profile => res.json(profile));
+        // .catch(err => res.status(400).json(err));
       })
       .catch(err => res.status(400).json(err));
   }
@@ -258,7 +254,7 @@ router.post(
 // DELETE API START
 
 // @route DELETE api/profile/experience/experience_id
-// @description Add experience to profile
+// @description DELETE experience from profile
 // @access Private
 
 router.delete(
@@ -286,7 +282,7 @@ router.delete(
 );
 
 // @route DELETE api/profile/education/education_id
-// @description Add education to profile
+// @description DELETE education from profile
 // @access Private
 
 router.delete(
@@ -310,6 +306,22 @@ router.delete(
           .catch(err => res.status(400).json(err));
       })
       .catch(err => res.status(404).json(err));
+  }
+);
+
+// @route DELETE api/profile
+// @description DELETE user and profile
+// @access Private
+
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOneAndRemove({ user: req.user.id }).then(() => {
+      User.findOneAndRemove({ _id: req.user.id }).then(() =>
+        res.json({ success: "Profile and User successfully deleted" })
+      );
+    });
   }
 );
 
