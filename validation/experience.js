@@ -11,9 +11,11 @@ module.exports = function validateExperienceInput(data) {
   if (validator.isEmpty(data.title)) {
     errors.title = "Job title is required";
   }
+
   if (validator.isEmpty(data.company)) {
     errors.company = "Company is required";
   }
+
   if (validator.isEmpty(data.from)) {
     errors.from = "From data field is required";
   }
