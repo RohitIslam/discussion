@@ -171,4 +171,34 @@ router.post(
   }
 );
 
+// @route POST api/profile/experience
+// @description Add experience to profile
+// @access Private
+
+router.post(
+  "/experience",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        const newExperience = {
+          title: req.body.title,
+          company: req.body.company,
+          location: req.body.location,
+          from: req.body.from,
+          to: req.body.to,
+          current: req.body.current,
+          description: req.body.description
+        };
+        // Add to experience array
+        profile.experience.unShift(newExperience);
+        profile
+          .save()
+          .then(profile => res.json(profile))
+          .catch(err => res.status(400).json(err));
+      })
+      .catch(err => res.status(400).json(err));
+  }
+);
+
 module.exports = router;
