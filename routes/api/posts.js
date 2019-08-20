@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
+//Load Input Validation
+const validatePostInput = require("../../validation/post");
+
 //Load Models
 const Post = require("../../models/Post");
 const Profile = require("../../models/Profile");
@@ -16,6 +19,24 @@ router.get("/test", (req, res) =>
   res.json({ msg: "test route works for posts" })
 );
 
+// @route GET api/post/all
+// @description get all posts
+// @access Public
+
+router.get("/all", (req, res) => {
+  const errors = {};
+  Post.find()
+    .populate("user", ["name", "avatar"])
+    .then(posts => {
+      if (!posts) {
+        errors.noProfile = "There are no posts";
+        res.status(404).json(errors);
+      }
+      res.json(posts);
+    })
+    .catch(err => res.status(400).json({ error: "here are no posts" }));
+});
+
 // GET API END
 
 // POST API START
@@ -24,9 +45,16 @@ router.get("/test", (req, res) =>
 // @description Create post
 // @access Private
 router.post(
-  "/test",
+  "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const { errors, isValid } = validatePostInput(req.body);
+
+    //Check validation
+    if (!isValid) {
+      return res.status(400).json({ errors });
+    }
+
     const newPost = new Post({
       text: req.body.text,
       name: req.body.name,
