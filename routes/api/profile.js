@@ -5,6 +5,7 @@ const router = express.Router();
 
 //Load Input Validation
 const validateProfileInput = require("../../validation/profile");
+const validateExperienceInput = require("../../validation/experience");
 
 //Load Models
 const Profile = require("../../models/Profile");
@@ -179,6 +180,13 @@ router.post(
   "/experience",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const { errors, isValid } = validateExperienceInput(req.body);
+
+    //Check validation
+    if (!isValid) {
+      res.status(400).json({ errors });
+    }
+
     Profile.findOne({ user: req.user.id })
       .then(profile => {
         const newExperience = {
@@ -191,7 +199,7 @@ router.post(
           description: req.body.description
         };
         // Add to experience array
-        profile.experience.unShift(newExperience);
+        profile.experience.unshift(newExperience);
         profile
           .save()
           .then(profile => res.json(profile))
