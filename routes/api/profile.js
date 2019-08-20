@@ -34,7 +34,7 @@ router.get(
       .then(profile => {
         if (!profile) {
           errors.noProfile = "There is no profile for this user";
-          res.status(400).json(errors);
+          return res.status(400).json(errors);
         }
         res.json(profile);
       })
@@ -53,7 +53,7 @@ router.get("/all", (req, res) => {
     .then(profiles => {
       if (!profiles) {
         errors.noProfile = "There are no profiles";
-        res.status(404).json(errors);
+        return res.status(404).json(errors);
       }
       res.json(profiles);
     })
@@ -71,7 +71,7 @@ router.get("/handle/:handle", (req, res) => {
     .then(profile => {
       if (!profile) {
         errors.noProfile = "There is no profile for this user";
-        res.status(404).json(errors);
+        return res.status(404).json(errors);
       }
       res.json(profile);
     })
@@ -91,7 +91,7 @@ router.get("/user/:user_id", (req, res) => {
     .then(profile => {
       if (!profile) {
         errors.noProfile = "There is no profile for this user";
-        res.status(404).json(errors);
+        return res.status(404).json(errors);
       }
       res.json(profile);
     })
@@ -116,7 +116,7 @@ router.post(
 
     //Check validation
     if (!isValid) {
-      res.status(400).json({ errors });
+      return res.status(400).json({ errors });
     }
 
     //Get fields
@@ -163,7 +163,7 @@ router.post(
               // if handle exist then it will throw a error
               if (profile) {
                 errors.handle = "That handle already exists";
-                res.status(400).json(errors);
+                return res.status(400).json(errors);
               }
               // if handle doesn's exist then it will save profile
               new Profile(profileFeilds)
@@ -190,7 +190,7 @@ router.post(
 
     //Check validation
     if (!isValid) {
-      res.status(400).json({ errors });
+      return res.status(400).json({ errors });
     }
 
     Profile.findOne({ user: req.user.id })
@@ -225,7 +225,7 @@ router.post(
 
     //Check validation
     if (!isValid) {
-      res.status(400).json({ errors });
+      return res.status(400).json({ errors });
     }
 
     Profile.findOne({ user: req.user.id })
