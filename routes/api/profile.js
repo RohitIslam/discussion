@@ -39,6 +39,24 @@ router.get(
   }
 );
 
+// @route GET api/profile/all
+// @description get all profiles
+// @access Public
+
+router.get("/all", (req, res) => {
+  const errors = {};
+  Profile.find()
+    .populate("user", ["name", "avatar"])
+    .then(profiles => {
+      if (!profiles) {
+        errors.noProfile = "There are no profiles";
+        res.status(404).json(errors);
+      }
+      res.json(profiles);
+    })
+    .catch(err => res.status(400).json({ error: "here are no profiles" }));
+});
+
 // @route GET api/profile/handle/:handle
 // @description get profile by handle
 // @access Public
@@ -54,7 +72,9 @@ router.get("/handle/:handle", (req, res) => {
       }
       res.json(profile);
     })
-    .catch(err => res.status(400).json(err));
+    .catch(err =>
+      res.status(400).json({ error: "There is no profile for this user" })
+    );
 });
 
 // @route GET api/profile/user/:user_id
@@ -72,7 +92,9 @@ router.get("/user/:user_id", (req, res) => {
       }
       res.json(profile);
     })
-    .catch(err => res.status(400).json(err));
+    .catch(err =>
+      res.status(400).json({ error: "There is no profile for this user" })
+    );
 });
 
 // @route POST api/profile
