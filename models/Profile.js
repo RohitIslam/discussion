@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const ProfileSchema = Schema({
   user: {
     type: Schema.Types.ObjectId,
-    required: true
+    ref: "users"
   },
   // handle is for SEO
   handle: {

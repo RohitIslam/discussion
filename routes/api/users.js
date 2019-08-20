@@ -8,7 +8,7 @@ const router = express.Router();
 
 //Load Input Validation
 const validateRegisterInput = require("../../validation/register");
-const validateLoginInpur = require("../../validation/login");
+const validateLoginInput = require("../../validation/login");
 
 //Load Models
 const User = require("../../models/User");
@@ -77,7 +77,7 @@ router.post("/register", (req, res) => {
 // @access Public
 
 router.post("/login", (req, res) => {
-  const { errors, isValid } = validateLoginInpur(req.body);
+  const { errors, isValid } = validateLoginInput(req.body);
 
   //Check validation
   if (!isValid) {

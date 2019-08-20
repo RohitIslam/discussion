@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const router = express.Router();
 
+//Load Input Validation
+const validateProfileInput = require("../../validation/profile");
+
 //Load Models
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
@@ -24,6 +27,7 @@ router.get(
   (req, res) => {
     const errors = {};
     Profile.findOne({ user: req.user.id })
+      .populate("user", ["name", "avatar"])
       .then(profile => {
         if (!profile) {
           errors.noProfile = "There is no profile for this user";
@@ -43,6 +47,13 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const { errors, isValid } = validateProfileInput(req.body);
+
+    //Check validation
+    if (!isValid) {
+      res.status(400).json({ errors });
+    }
+
     //Get fields
     const profileFeilds = {};
     profileFeilds.user = req.user.id;
