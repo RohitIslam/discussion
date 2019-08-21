@@ -5,6 +5,8 @@ import "./App.css";
 import Navbar from "./Components/Layouts/Navbar";
 import Footer from "./Components/Layouts/Footer";
 import Landing from "./Components/Layouts/Landing";
+import Login from "./Components/Auth/Login";
+import Register from "./Components/Auth/Register";
 
 class App extends Component {
   state = {};
@@ -14,6 +16,10 @@ class App extends Component {
         <Navbar />
         <Switch>
           <Route path="/" exact component={Landing} />
+          <div className="container">
+            <Route path="/register" exact component={Register} />
+            <Route path="/login" exact component={Login} />
+          </div>
         </Switch>
         <Footer />
       </div>
