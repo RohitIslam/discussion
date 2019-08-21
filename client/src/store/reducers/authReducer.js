@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/actionTypes";
+// import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   isAuthenticated: false,
@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const authReducer = (currentState = initialState, action) => {
-  switch (action.types) {
+  switch (action.type) {
     default:
       return currentState;
   }
