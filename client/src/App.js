@@ -16,11 +16,11 @@ class App extends Component {
         <Navbar />
         <Switch>
           <Route path="/" exact component={Landing} />
-          <div className="container">
-            <Route path="/register" exact component={Register} />
-            <Route path="/login" exact component={Login} />
-          </div>
         </Switch>
+        <div className="container">
+          <Route path="/register" exact component={Register} />
+          <Route path="/login" exact component={Login} />
+        </div>
         <Footer />
       </div>
     );
