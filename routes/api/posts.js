@@ -73,7 +73,7 @@ router.post(
 
     //Check validation
     if (!isValid) {
-      return res.status(400).json({ errors });
+      return res.status(400).json(errors);
     }
 
     const newPost = new Post({
@@ -107,7 +107,7 @@ router.post(
                 .length > 0 //check if there is user id in the likes array or not
             ) {
               errors.alreadyLiked = "User already liked this post";
-              return res.status(400).json({ errors });
+              return res.status(400).json(errors);
             }
 
             //Add user id to likes array
@@ -142,7 +142,7 @@ router.post(
                 .length === 0 //check if there is user id in the likes array or not
             ) {
               errors.notLiked = "You have not yet liked this post";
-              return res.status(400).json({ errors });
+              return res.status(400).json(errors);
             }
 
             //Get remove index
@@ -174,7 +174,7 @@ router.post(
 
     //Check validation
     if (!isValid) {
-      return res.status(400).json({ errors });
+      return res.status(400).json(errors);
     }
 
     Post.findById(req.params.id)

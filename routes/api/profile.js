@@ -116,7 +116,7 @@ router.post(
 
     //Check validation
     if (!isValid) {
-      return res.status(400).json({ errors });
+      return res.status(400).json(errors);
     }
 
     //Get fields
@@ -190,7 +190,7 @@ router.post(
 
     //Check validation
     if (!isValid) {
-      return res.status(400).json({ errors });
+      return res.status(400).json(errors);
     }
 
     Profile.findOne({ user: req.user.id })
@@ -225,7 +225,7 @@ router.post(
 
     //Check validation
     if (!isValid) {
-      return res.status(400).json({ errors });
+      return res.status(400).json(errors);
     }
 
     Profile.findOne({ user: req.user.id })

@@ -44,7 +44,7 @@ router.post("/register", (req, res) => {
 
   //Check validation
   if (!isValid) {
-    return res.status(400).json({ errors });
+    return res.status(400).json(errors);
   }
 
   User.findOne({ email: req.body.email })
@@ -97,7 +97,7 @@ router.post("/login", (req, res) => {
 
   //Check validation
   if (!isValid) {
-    return res.status(400).json({ errors });
+    return res.status(400).json(errors);
   }
 
   const email = req.body.email;
