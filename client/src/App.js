@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
+
 import "./App.css";
 import Navbar from "./Components/Layouts/Navbar";
 import Footer from "./Components/Layouts/Footer";
@@ -10,7 +12,9 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar />
-        <Landing />
+        <Switch>
+          <Route path="/" exact component={Landing} />
+        </Switch>
         <Footer />
       </div>
     );
