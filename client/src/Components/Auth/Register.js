@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import classnames from "classnames";
 
 import * as actions from "../../store/actions/indexActions";
@@ -15,7 +16,6 @@ class Register extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.errors) {
-      console.log("getDerivedStateFromProps: ", nextProps.errors);
       return { errors: nextProps.errors }; // assigning this.props.errors to this.state.errors object
     }
     return null;
@@ -35,7 +35,7 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    this.props.onRegistrationSubmit(newUser);
+    this.props.onRegistrationSubmit(newUser, this.props.history);
   };
 
   render() {
@@ -132,11 +132,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onRegistrationSubmit: newUser => dispatch(actions.register(newUser))
+    onRegistrationSubmit: (newUser, history) =>
+      dispatch(actions.register(newUser, history))
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Register);
+)(withRouter(Register));

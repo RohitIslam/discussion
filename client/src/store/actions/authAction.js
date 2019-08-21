@@ -7,11 +7,11 @@ export const getErrors = error => {
   return { type: actionTypes.GET_ERRORS, payload: error };
 };
 
-export const register = userData => {
+export const register = (userData, history) => {
   return dispatch => {
     axios
       .post("/api/users/register", userData)
-      .then(res => console.log(res.data))
+      .then(res => history.push("/login"))
       .catch(err => dispatch(getErrors(err.response.data)));
   };
 };
