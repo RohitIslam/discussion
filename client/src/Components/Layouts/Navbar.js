@@ -10,6 +10,7 @@ class Navbar extends Component {
   logoutClickHandler = event => {
     event.preventDefault();
 
+    this.props.onClearProfile();
     this.props.onLogOut();
   };
 
@@ -24,7 +25,14 @@ class Navbar extends Component {
             className="nav-link"
             onClick={e => this.logoutClickHandler(e)}
           >
-            <img className="rounded-circle" src={user.avatar} alt={user.name} style={{width: '25px', marginRight: '5px'}} title="You must have a Gravatar connected to your email to display your image" /> Logout
+            <img
+              className="rounded-circle"
+              src={user.avatar}
+              alt={user.name}
+              style={{ width: "25px", marginRight: "5px" }}
+              title="You must have a Gravatar connected to your email to display your image"
+            />{" "}
+            Logout
           </a>
         </li>
       </ul>
@@ -85,7 +93,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLogOut: () => dispatch(actions.logout())
+    onLogOut: () => dispatch(actions.logout()),
+    onClearProfile: () => dispatch(actions.clearCurrentProfile())
   };
 };
 

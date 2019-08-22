@@ -7,6 +7,12 @@ export const profileLoading = () => {
   };
 };
 
+export const clearCurrentProfile = () => {
+  return {
+    type: actionTypes.CLEAR_CURRENT_PROFILE
+  };
+};
+
 export const getProfile = data => {
   return {
     type: actionTypes.GET_PROFILE,

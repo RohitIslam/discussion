@@ -19,6 +19,11 @@ const profileReducer = (currentState = initialState, action) => {
         profile: action.payload,
         loading: false
       };
+    case actionTypes.CLEAR_CURRENT_PROFILE:
+      return {
+        ...currentState,
+        profile: null
+      };
     default:
       return currentState;
   }

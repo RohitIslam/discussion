@@ -23,12 +23,15 @@ if (localStorage.jwtToken) {
 
   //check for expired token
   const currentTime = Date.now() / 1000;
-  if(decoded.exp < currentTime) {
+  if (decoded.exp < currentTime) {
     //Logout user
-    store.dispatch(actions.logout(decoded));
+    store.dispatch(actions.logout());
+
+    //Clear current profile
+    store.dispatch(actions.clearCurrentProfile());
 
     // Redirected to login
-    window.location.href = '/login';
+    window.location.href = "/login";
   }
 }
 
