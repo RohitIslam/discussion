@@ -1,13 +1,13 @@
 import React from "react";
 import classnames from "classnames";
-import PropTypes from "prop-types";
 
 const CustomSelectList = ({ name, value, error, info, onChange, options }) => {
   const selectOptions = options.map(option => (
-    <option key={option.label} value={option.value}>
+    <option key={option.key} value={option.value}>
       {option.label}
     </option>
   ));
+  console.log(selectOptions);
   return (
     <div className="form-group">
       <select
@@ -24,15 +24,6 @@ const CustomSelectList = ({ name, value, error, info, onChange, options }) => {
       {error && <div className="invalid-feedback">{error}</div>}
     </div>
   );
-};
-
-CustomSelectList.propTypes = {
-  name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  info: PropTypes.string,
-  error: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  options: PropTypes.array.isRequired
 };
 
 export default CustomSelectList;

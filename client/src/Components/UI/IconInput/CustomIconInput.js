@@ -8,6 +8,7 @@ const CustomIconInput = ({
   value,
   error,
   icon,
+  type,
   onChange
 }) => {
   return (
@@ -21,6 +22,7 @@ const CustomIconInput = ({
         className={classnames("form-control form-control-lg", {
           "is-invalid": error
         })}
+        type={type}
         placeholder={placeholder}
         name={name}
         value={value}
