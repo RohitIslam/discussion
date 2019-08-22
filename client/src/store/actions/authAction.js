@@ -1,13 +1,11 @@
 import * as actionTypes from "./actionTypes";
+import getErrors from "../utils/getErrors";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
 import setAuthToken from "../utils/setAuthToken";
 
 //Register user
-export const getErrors = error => {
-  return { type: actionTypes.GET_ERRORS, payload: error };
-};
 
 export const register = (userData, history) => {
   return dispatch => {
