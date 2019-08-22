@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/indexActions";
 import Spinner from "../UI/Spinner/Spinner";
@@ -12,12 +13,25 @@ class Dashboard extends Component {
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
 
-    let dashboardContainer;
+    let dashboardContent;
 
     if (profile === null || loading) {
-      dashboardContainer = <Spinner />;
+      dashboardContent = <Spinner />;
     } else {
-      dashboardContainer = <h1> hi</h1>;
+      //check if logged in user have profile data or not
+      if (Object.keys(profile).length > 0) {
+        dashboardContent = <h1> hi</h1>;
+      } else {
+        dashboardContent = (
+          <div>
+            <p className="lead text-muted">Welcome {user.name} </p>
+            <p>You have to setup your profile</p>
+            <Link to="/create-profile" className="btn btn-lg btn-info">
+              Create Profile
+            </Link>
+          </div>
+        );
+      }
     }
 
     return (
@@ -26,7 +40,7 @@ class Dashboard extends Component {
           <div className="row">
             <div className="col-md-12">
               <h1 className="display-4"> Dashboard</h1>
-              {dashboardContainer}
+              {dashboardContent}
             </div>
           </div>
         </div>
