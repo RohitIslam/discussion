@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import * as actions from "../../store/actions/indexActions";
 
 class Navbar extends Component {
-  state = {};
-
   logoutClickHandler = event => {
     event.preventDefault();
 
