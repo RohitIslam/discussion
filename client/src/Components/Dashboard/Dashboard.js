@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/indexActions";
+import Spinner from "../UI/Spinner/Spinner";
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -8,9 +9,27 @@ class Dashboard extends Component {
   }
 
   render() {
+    const { user } = this.props.auth;
+    const { profile, loading } = this.props.profile;
+
+    let dashboardContainer;
+
+    if (profile === null || loading) {
+      dashboardContainer = <Spinner />;
+    } else {
+      dashboardContainer = <h1> hi</h1>;
+    }
+
     return (
-      <div>
-        <h1>Dashboard</h1>
+      <div className="dashboard">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="display-4"> Dashboard</h1>
+              {dashboardContainer}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -19,8 +38,7 @@ class Dashboard extends Component {
 const mapStateToProps = state => {
   return {
     auth: state.auth,
-    profile: state.profile,
-    errors: state.errors
+    profile: state.profile
   };
 };
 
