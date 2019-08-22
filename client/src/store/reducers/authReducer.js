@@ -3,7 +3,7 @@ import isEmptyValidation from "../../Validation/isEmptyValidation";
 
 const initialState = {
   isAuthenticated: false,
-  users: {}
+  user: {}
 };
 
 const authReducer = (currentState = initialState, action) => {
@@ -12,7 +12,7 @@ const authReducer = (currentState = initialState, action) => {
       return {
         ...currentState,
         isAuthenticated: !isEmptyValidation(action.payload),
-        users: action.payload
+        user: action.payload
       };
     default:
       return currentState;
