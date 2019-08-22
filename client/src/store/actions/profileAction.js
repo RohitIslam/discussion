@@ -1,4 +1,5 @@
 import * as actionTypes from "./actionTypes";
+import getErrors from "../utils/getErrors";
 import axios from "axios";
 
 export const profileLoading = () => {
@@ -28,5 +29,15 @@ export const getCurrentProfile = () => {
       .get("/api/profile")
       .then(res => dispatch(getProfile(res.data)))
       .catch(err => dispatch(getProfile({})));
+  };
+};
+
+//Create profile
+export const createProfile = (profileData, history) => {
+  return dispatch => {
+    axios
+      .post("/api/profile", profileData)
+      .then(res => history.push("/dashboard"))
+      .catch(err => dispatch(getErrors(err.response.data)));
   };
 };

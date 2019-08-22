@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import * as actions from "../../store/actions/indexActions";
 import CustomInput from "../UI/Input/CustomInput";
@@ -27,6 +28,13 @@ class CreateProfile extends Component {
     errors: {}
   };
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.errors) {
+      return { errors: nextProps.errors }; // assigning this.props.errors to this.state.errors object
+    }
+    return null;
+  }
+
   changeHandler = event => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -35,12 +43,23 @@ class CreateProfile extends Component {
   formSubmitHandler = event => {
     event.preventDefault();
 
-    // const userInfo = {
-    //     email: this.state.email,
-    //     password: this.state.password
-    // };
+    const profileData = {
+      handle: this.state.handle,
+      company: this.state.company,
+      website: this.state.website,
+      location: this.state.location,
+      status: this.state.status,
+      skills: this.state.skills,
+      gitHubUserName: this.state.gitHubUserName,
+      bio: this.state.bio,
+      twitter: this.state.twitter,
+      facebook: this.state.facebook,
+      youtube: this.state.youtube,
+      linkedin: this.state.linkedin,
+      instagram: this.state.instagram
+    };
 
-    // this.props.onLoginSubmit(userInfo);
+    this.props.onCreateProfileSubmit(profileData, this.props.history);
   };
 
   render() {
@@ -131,9 +150,9 @@ class CreateProfile extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <a href="dashboard.html" className="btn btn-light">
+              <Link to="/dashboard" className="btn btn-light">
                 Go Back
-              </a>
+              </Link>
               <h1 className="display-4 text-center">Create Your Profile</h1>
               <small className="d-block pb-3">* = required field</small>
               <form noValidate onSubmit={this.formSubmitHandler}>
@@ -184,7 +203,7 @@ class CreateProfile extends Component {
                 />
                 <CustomInput
                   type="text"
-                  placeholder="Skills"
+                  placeholder="* Skills"
                   name="skills"
                   value={this.state.skills}
                   onChange={this.changeHandler}
@@ -213,6 +232,7 @@ class CreateProfile extends Component {
 
                 <div className="mb-3">
                   <button
+                    type="button"
                     onClick={() => {
                       this.setState(prevState => ({
                         displaySocialInputs: !prevState.displaySocialInputs
@@ -249,11 +269,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLoginSubmit: userInfo => dispatch(actions.login(userInfo))
+    onCreateProfileSubmit: (profileData, history) =>
+      dispatch(actions.createProfile(profileData, history))
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreateProfile);
+)(withRouter(CreateProfile));
