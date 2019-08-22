@@ -31,4 +31,8 @@ const CustomInput = ({
   );
 };
 
+CustomInput.defaultProps = {
+  type: "text"
+};
+
 export default CustomInput;
