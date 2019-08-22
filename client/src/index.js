@@ -2,11 +2,25 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+
+import setAuthToken from "./store/utils/setAuthToken";
+import * as actions from "./store/actions/indexActions";
 
 import "./index.css";
 import App from "./App";
 import store from "./store/store";
 import * as serviceWorker from "./serviceWorker";
+
+//check for token
+if (localStorage.jwtToken) {
+  //set auth token to header auth
+  setAuthToken(localStorage.jwtToken);
+  // Decode token to ger user data
+  const decoded = jwt_decode(localStorage.jwtToken);
+  //Set current user
+  store.dispatch(actions.setCurrentUser(decoded));
+}
 
 const app = (
   <Provider store={store}>
