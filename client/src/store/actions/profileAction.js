@@ -41,3 +41,20 @@ export const createProfile = (profileData, history) => {
       .catch(err => dispatch(getErrors(err.response.data)));
   };
 };
+
+//Delete account
+
+export const setCurrentUser = decoded => {
+  return { type: actionTypes.SET_CURRENT_USER, payload: decoded };
+};
+
+export const deleteAccount = () => {
+  return dispatch => {
+    if (window.confirm("Are you sure? This can not be undone!")) {
+      axios
+        .delete("/api/profile")
+        .then(res => setCurrentUser({}))
+        .catch(err => dispatch(getErrors(err.response.data)));
+    }
+  };
+};

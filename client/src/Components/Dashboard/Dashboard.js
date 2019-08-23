@@ -10,6 +10,14 @@ class Dashboard extends Component {
     this.props.onCurrentProfile();
   }
 
+  // componentDidUpdate() {
+  //   this.props.onCurrentProfile();
+  // }
+
+  onDeleteClick = event => {
+    this.props.onDeleteAccount();
+  };
+
   render() {
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
@@ -28,6 +36,13 @@ class Dashboard extends Component {
               <Link to={`/profile/${profile.handle}`}>{user.name} </Link>
             </p>
             <ProfileManageDashboard />
+            <div style={{ marginBottom: "60px" }} />
+            {/* <button
+              className="btn btn-danger"
+              onClick={e => this.onDeleteClick(e)}
+            >
+              Delete My Account
+            </button> */}
           </div>
         );
       } else {
@@ -67,7 +82,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onCurrentProfile: () => dispatch(actions.getCurrentProfile())
+    onCurrentProfile: () => dispatch(actions.getCurrentProfile()),
+    onDeleteAccount: () => dispatch(actions.deleteAccount())
   };
 };
 
