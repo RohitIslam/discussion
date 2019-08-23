@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/indexActions";
 import Spinner from "../UI/Spinner/Spinner";
+import ProfileManageDashboard from "./ProfileManageDashboard";
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -20,7 +21,15 @@ class Dashboard extends Component {
     } else {
       //check if logged in user have profile data or not
       if (Object.keys(profile).length > 0) {
-        dashboardContent = <h1> hi</h1>;
+        dashboardContent = (
+          <div>
+            <p className="lead text-muted">
+              Welcome{" "}
+              <Link to={`/profile/${profile.handle}`}>{user.name} </Link>
+            </p>
+            <ProfileManageDashboard />
+          </div>
+        );
       } else {
         dashboardContent = (
           <div>
