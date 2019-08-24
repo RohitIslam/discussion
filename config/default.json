@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://rohit:rohit12345@discussion-project-13yw4.mongodb.net/test?retryWrites=true&w=majority",
+  "secretOrKey": "secret",
+  "githubClientID": "ae5830acd8c4351dd31d",
+  "githubSecret": "f0770834d7abe7aa9bc13c55bb09aa2e112a387a"
+}

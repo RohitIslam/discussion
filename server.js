@@ -1,46 +1,28 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const passport = require("passport");
-
-const users = require("./routes/api/users");
-const profile = require("./routes/api/profile");
-const posts = require("./routes/api/posts");
+const connectDB = require("./config/dbConfig");
 
 const app = express();
 
 // database connection start
-
-//DB Config
-const db = require("./config/keys").mongoURI;
-
-//Connect to MongoDB
-mongoose
-  .connect(db, { useNewUrlParser: true })
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.log(err));
-
-app.get("/", (req, res) => {
-  res.send("Connected");
-});
-
-// database connection end
+connectDB();
 
 //Middlewares start
 
-//Body parser middleware
+// //Body parser middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-//Passport Middleware
-app.use(passport.initialize());
-require("./config/passport")(passport);
+// //Passport Middleware
+// app.use(passport.initialize());
+// require("./config/passport")(passport);
 
 //Middlewares end
 
 //Use Routes
-app.use("/api/users", users);
-app.use("/api/profile", profile);
-app.use("/api/posts", posts);
+app.use("/api/users", require("./routes/api/users"));
+app.use("/api/profile", require("./routes/api/profile"));
+app.use("/api/posts", require("./routes/api/posts"));
+app.use("/api/auth", require("./routes/api/auth"));
 
 //start server at port 5000
 const PORT = process.env.PORT || 5000;
