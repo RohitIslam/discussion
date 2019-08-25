@@ -95,6 +95,71 @@ router.post(
 
 // // POST API END
 
+// PUT API START
+
+// @route POST api/post/like/:id
+// @description Like post
+// @access Private
+
+router.put("/like/:id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    // check for the post owner
+    if (
+      post.likes.filter(like => like.user.toString() === req.user.id).length > 0 //check if there is user id in the likes array or not
+    ) {
+      return res.status(400).json({ msg: "You already liked this post" });
+    }
+
+    //Add user id to likes array
+    post.likes.unshift({ user: req.user.id });
+
+    //save likes to the database
+    await post.save();
+
+    res.json(post.likes);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// @route POST api/post/unlike/:id
+// @description Unlike post
+// @access Private
+
+router.put("/unlike/:id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    // check for the post owner
+    if (
+      post.likes.filter(like => like.user.toString() === req.user.id).length ===
+      0 //check if there is user id in the likes array or not
+    ) {
+      return res.status(400).json({ msg: "You have not yet liked this post" });
+    }
+
+    //Get remove index
+    const removeIndex = post.likes
+      .map(item => item.user.toString())
+      .indexOf(req.user.id);
+
+    //splice it out of the array
+    post.likes.splice(removeIndex, 1);
+
+    //save likes to the database
+    await post.save();
+
+    res.json(post.likes);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// PUT API END
+
 // DELETE API START
 
 // @route Delete api/posts/:id
@@ -104,6 +169,7 @@ router.delete("/:id", auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
+    // check for the user
     if (post.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: "User Not Authorized" });
     }
