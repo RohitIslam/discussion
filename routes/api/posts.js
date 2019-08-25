@@ -28,6 +28,22 @@ router.get("/", async (req, res) => {
   }
 });
 
+// @route GET api/posts/:id
+// @description get post by id
+// @access Public
+router.get("/:id", async (req, res) => {
+  try {
+    const posts = await Post.findById(req.params.id).populate("user", [
+      "name",
+      "avatar"
+    ]);
+    res.json(posts);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 // GET API END
 
 // POST API START
