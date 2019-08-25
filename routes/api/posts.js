@@ -10,29 +10,27 @@ const Profile = require("../../models/Profile");
 const User = require("../../models/User");
 const Post = require("../../models/Post");
 
+// GET API START
+
+// @route GET api/posts
+// @description Get all posts
+// @access Public
+
+router.get("/", async (req, res) => {
+  try {
+    const posts = await Post.find()
+      .sort({ date: -1 }) //latest posts will appear first
+      .populate("user", ["name", "avatar"]);
+    res.json(posts);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// GET API END
+
 // POST API START
-
-// router.post(
-//     "/",
-//     passport.authenticate("jwt", { session: false }),
-//     (req, res) => {
-//         const { errors, isValid } = validatePostInput(req.body);
-
-//         //Check validation
-//         if (!isValid) {
-//             return res.status(400).json(errors);
-//         }
-
-//         const newPost = new Post({
-//             text: req.body.text,
-//             name: req.body.name,
-//             avatar: req.body.avatar,
-//             user: req.user.id
-//         });
-
-//         newPost.save().then(post => res.json(post));
-//     }
-// );
 
 // @route Post api/posts
 // @description Create post
