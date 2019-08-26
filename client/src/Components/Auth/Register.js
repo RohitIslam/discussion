@@ -24,15 +24,14 @@ const Register = props => {
       console.log("Password do not match");
       props.onSetAlert("Password do not match", "danger");
     } else {
-      console.log(formData);
+      const newUser = {
+        name,
+        email,
+        password
+      };
+      console.log("Register: ", newUser);
+      props.onRegistrationSubmit(newUser);
     }
-    // const newUser = {
-    //   name: name,
-    //   email: email,
-    //   password: password,
-    //   password2: password2
-    // };
-    // this.props.onRegistrationSubmit(newUser, this.props.history);
   };
 
   return (
@@ -41,7 +40,7 @@ const Register = props => {
       <p className="lead">
         <i className="fas fa-user"></i> Create Your Account
       </p>
-      <form className="form" onSubmit={e => formSubmitHandler(e)}>
+      <form className="form" onSubmit={e => formSubmitHandler(e)} noValidate>
         <div className="form-group">
           <input
             type="text"
@@ -97,12 +96,14 @@ const Register = props => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSetAlert: (msg, alertType) => dispatch(actions.setAlert(msg, alertType))
+    onSetAlert: (msg, alertType) => dispatch(actions.setAlert(msg, alertType)),
+    onRegistrationSubmit: userData => dispatch(actions.register(userData))
   };
 };
 
 Register.propTypes = {
-  onSetAlert: PropTypes.func.isRequired
+  onSetAlert: PropTypes.func.isRequired,
+  onRegistrationSubmit: PropTypes.func.isRequired
 };
 
 export default connect(

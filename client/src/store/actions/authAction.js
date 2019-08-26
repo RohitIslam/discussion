@@ -19,16 +19,21 @@ export const registerFail = () => {
 export const register = userData => {
   return async dispatch => {
     const config = {
-      "Content-Type": "application/json"
+      headers: {
+        "Content-Type": "application/json"
+      }
     };
     const body = JSON.stringify(userData);
     try {
+      console.log("authAction: ", body);
       const res = await axios.post("/api/users/", body, config);
-      dispatch(registerSuccess(res));
+      console.log("authAction Res: ", res);
+      dispatch(registerSuccess(res.data));
     } catch (err) {
       const errors = err.response.data.errors;
+      console.log("authAction Errors: ", errors);
       if (errors) {
-        errors.foreach(error =>
+        errors.forEach(error =>
           dispatch(actions.setAlert(error.msg, "danger"))
         );
       }
