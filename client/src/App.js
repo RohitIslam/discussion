@@ -6,6 +6,7 @@ import Navbar from "./Components/Layouts/Navbar";
 import Landing from "./Components/Layouts/Landing";
 import Login from "./Components/Auth/Login";
 import Register from "./Components/Auth/Register";
+import Alert from "./Components/Layouts/Alert";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Navbar />
       <Route path="/" exact component={Landing} />
       <section className="container">
+        <Alert />
         <Switch>
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />
