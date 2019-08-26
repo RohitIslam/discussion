@@ -1,14 +1,13 @@
 import { combineReducers } from "redux";
 
+import alertReducer from "./alertReducer";
 // import authReducer from "./authReducer";
-// import errorReducer from "./errorReducer";
 // import profileReducer from "./profileReducer";
 
-const rootReducer = combineReducers({});
-// const rootReducer = combineReducers({
-//     auth: authReducer,
-//     profile: profileReducer,
-//     errors: errorReducer
-// });
+const rootReducer = combineReducers({
+  alert: alertReducer
+  // auth: authReducer,
+  // profile: profileReducer,
+});
 
 export default rootReducer;
