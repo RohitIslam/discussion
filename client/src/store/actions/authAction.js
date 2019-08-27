@@ -109,3 +109,9 @@ export const login = userData => {
     }
   };
 };
+
+//Logout and clear profile
+
+export const logout = () => dispatch => {
+  dispatch({ type: actionTypes.LOGOUT });
+};
