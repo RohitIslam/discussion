@@ -8,10 +8,16 @@ const Navbar = props => {
   const authLinks = (
     <ul>
       <li>
-        <a href="/login" onClick={props.onLogout}>
+        <Link to="/dashboard">
+          <i className="fas fa-user" />{" "}
+          <span className="hide-sm">Dashboard</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/login" onClick={props.onLogout}>
           <i className="fas fa-sign-out-alt" />{" "}
           <span className="hide-sm">Logout</span>
-        </a>
+        </Link>
       </li>
     </ul>
   );

@@ -112,6 +112,13 @@ export const login = userData => {
 
 //Logout and clear profile
 
+export const clearProfile = () => {
+  return {
+    type: actionTypes.CLEAR_PROFILE
+  };
+};
+
 export const logout = () => dispatch => {
+  dispatch(clearProfile());
   dispatch({ type: actionTypes.LOGOUT });
 };
