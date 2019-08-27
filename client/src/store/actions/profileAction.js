@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
-// import * as actions from "./indexActions";
+import * as actions from "./indexActions";
 
 //Get current Profile
 export const getProfile = data => {
@@ -27,4 +27,39 @@ export const getCurrentProfile = () => {
       dispatch(profileError(err.response.statusText, err.response.status));
     }
   };
+};
+
+//Create or Update profile
+
+export const createProfile = (
+  formData,
+  history,
+  edit = false
+) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    const res = await axios.post("/api/profile", formData, config);
+
+    dispatch(getProfile(res.data));
+
+    dispatch(
+      actions.setAlert(edit ? "Profile Updated" : "Profile Created", "success")
+    );
+
+    if (!edit) {
+      history.push("/dashboard");
+    }
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(actions.setAlert(error.msg, "danger")));
+    }
+    dispatch(profileError(err.response.statusText, err.response.status));
+  }
 };
