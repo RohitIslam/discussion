@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import * as actions from "../../store/actions/indexActions";
 import Spinner from "../UI/Spinner/Spinner";
+import ManageProfileOptions from "../Profile/ManageProfileOptions";
 
 const Dashboard = props => {
   useEffect(() => {
@@ -20,7 +21,9 @@ const Dashboard = props => {
         {props.auth.user && props.auth.user.name}
       </p>
       {props.profile.profile !== null ? (
-        <Fragment>has </Fragment>
+        <Fragment>
+          <ManageProfileOptions />
+        </Fragment>
       ) : (
         <Fragment>
           <p>Please setup your profile !!</p>
