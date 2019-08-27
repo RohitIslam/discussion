@@ -24,6 +24,21 @@ const authReducer = (currentState = initialState, action) => {
         isAuthenticated: false,
         loading: false
       };
+    case actionTypes.USER_LOADED:
+      return {
+        ...currentState,
+        isAuthenticated: true,
+        loading: false,
+        user: action.payload
+      };
+    case actionTypes.AUTH_ERROR:
+      localStorage.removeItem("token");
+      return {
+        ...currentState,
+        token: null,
+        isAuthenticated: false,
+        loading: false
+      };
     default:
       return currentState;
   }

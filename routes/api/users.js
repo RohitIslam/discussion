@@ -51,12 +51,14 @@ router.post(
           .json({ errors: [{ msg: "Email already exists" }] });
       }
 
+      // assigning the Avatar
       const avatar = gravatar.url(req.body.email, {
         s: "200", // Size
         r: "pg", // Rating
         d: "mm" // Default avatar
       });
 
+      //Assinging User value
       user = new User({
         name,
         email,
