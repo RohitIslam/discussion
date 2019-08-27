@@ -3,5 +3,6 @@ export { register, userLoaded, login, logout } from "./authAction";
 export {
   getCurrentProfile,
   createProfile,
-  addExperience
+  addExperience,
+  addEducation
 } from "./profileAction";

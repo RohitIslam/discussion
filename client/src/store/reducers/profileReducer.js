@@ -21,6 +21,12 @@ const profileReducer = (currentState = initialState, action) => {
         error: action.payload,
         loading: false
       };
+    case actionTypes.UPDATE_PROFILE:
+      return {
+        ...currentState,
+        profile: action.payload,
+        loading: false
+      };
     case actionTypes.CLEAR_PROFILE:
       return {
         ...currentState,
