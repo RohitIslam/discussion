@@ -1,3 +1,3 @@
 export { setAlert } from "./alertAction";
 
-export { register, userLoaded } from "./authAction";
+export { register, userLoaded, login } from "./authAction";

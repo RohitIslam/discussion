@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import * as actions from "../../store/actions/indexActions";
 
-const Login = () => {
+const Login = props => {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -15,14 +18,13 @@ const Login = () => {
 
   const formSubmitHandler = event => {
     event.preventDefault();
-    console.log(formData);
-    // const newUser = {
-    //   name: name,
-    //   email: email,
-    //   password: password,
-    //   password2: password2
-    // };
-    // this.props.onRegistrationSubmit(newUser, this.props.history);
+
+    const userData = {
+      email,
+      password
+    };
+
+    props.onLoginSubmit(userData);
   };
 
   return (
@@ -31,7 +33,7 @@ const Login = () => {
       <p className="lead">
         <i className="fas fa-user"></i> Sign Into Your Account
       </p>
-      <form className="form" onSubmit={e => formSubmitHandler(e)}>
+      <form className="form" onSubmit={e => formSubmitHandler(e)} noValidate>
         <div className="form-group">
           <input
             type="email"
@@ -65,4 +67,19 @@ const Login = () => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  onSetAlert: PropTypes.func.isRequired,
+  onLoginSubmit: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSetAlert: (msg, alertType) => dispatch(actions.setAlert(msg, alertType)),
+    onLoginSubmit: userData => dispatch(actions.login(userData))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Login);

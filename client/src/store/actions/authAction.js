@@ -42,21 +42,70 @@ export const register = userData => {
         "Content-Type": "application/json"
       }
     };
+
     const body = JSON.stringify(userData);
+
     try {
-      console.log("authAction: ", body);
       const res = await axios.post("/api/users/", body, config);
-      console.log("authAction Res: ", res);
+
       dispatch(registerSuccess(res.data));
+
+      dispatch(userLoaded());
     } catch (err) {
       const errors = err.response.data.errors;
-      console.log("authAction Errors: ", errors);
+
       if (errors) {
         errors.forEach(error =>
           dispatch(actions.setAlert(error.msg, "danger"))
         );
       }
+
       dispatch(registerFail());
+    }
+  };
+};
+
+//Login user
+
+export const loginSuccess = token => {
+  return {
+    type: actionTypes.LOGIN_SUCCESS,
+    payload: token
+  };
+};
+
+export const loginFail = () => {
+  return {
+    type: actionTypes.LOGIN_FAIL
+  };
+};
+
+export const login = userData => {
+  return async dispatch => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    const body = JSON.stringify(userData);
+
+    try {
+      const res = await axios.post("/api/auth", body, config);
+
+      dispatch(loginSuccess(res.data));
+
+      dispatch(userLoaded());
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach(error =>
+          dispatch(actions.setAlert(error.msg, "danger"))
+        );
+      }
+
+      dispatch(loginFail());
     }
   };
 };
