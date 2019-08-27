@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as actions from "../../store/actions/indexActions";
@@ -26,6 +26,11 @@ const Login = props => {
 
     props.onLoginSubmit(userData);
   };
+
+  //Redirect if logged in
+  if (props.isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <React.Fragment>
@@ -68,18 +73,23 @@ const Login = props => {
 };
 
 Login.propTypes = {
-  onSetAlert: PropTypes.func.isRequired,
-  onLoginSubmit: PropTypes.func.isRequired
+  onLoginSubmit: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+};
+
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSetAlert: (msg, alertType) => dispatch(actions.setAlert(msg, alertType)),
     onLoginSubmit: userData => dispatch(actions.login(userData))
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Login);

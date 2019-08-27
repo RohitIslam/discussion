@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as actions from "../../store/actions/indexActions";
@@ -32,6 +32,11 @@ const Register = props => {
       props.onRegistrationSubmit(newUser);
     }
   };
+
+  //Redirect after register
+  if (props.isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <React.Fragment>
@@ -95,7 +100,14 @@ const Register = props => {
 
 Register.propTypes = {
   onSetAlert: PropTypes.func.isRequired,
-  onRegistrationSubmit: PropTypes.func.isRequired
+  onRegistrationSubmit: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+};
+
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -106,6 +118,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Register);
