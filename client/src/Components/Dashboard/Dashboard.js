@@ -6,21 +6,20 @@ import * as actions from "../../store/actions/indexActions";
 import Spinner from "../UI/Spinner/Spinner";
 import ManageProfileOptions from "../Profile/ManageProfileOptions";
 
-const Dashboard = props => {
+const Dashboard = ({ onGetCurrentProfile, auth, profile }) => {
   useEffect(() => {
-    props.onGetCurrentProfile();
+    onGetCurrentProfile();
   }, []);
 
-  return props.profile.loading && props.profile === null ? (
+  return profile.loading && profile === null ? (
     <Spinner />
   ) : (
     <Fragment>
       <h1 className="large text-primary">Dashboard</h1>
       <p className="lead">
-        <i className="fas fa-user"></i> Welcome{" "}
-        {props.auth.user && props.auth.user.name}
+        <i className="fas fa-user"></i> Welcome {auth.user && auth.user.name}
       </p>
-      {props.profile.profile !== null ? (
+      {profile.profile !== null ? (
         <Fragment>
           <ManageProfileOptions />
         </Fragment>
