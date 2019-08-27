@@ -9,6 +9,7 @@ import Register from "./Components/Auth/Register";
 import Alert from "./Components/Layouts/Alert";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import PrivateRoute from "./store/utils/PrivateRoute/PrivateRoute";
+import CreateProfile from "./Components/Profile/CreateProfile";
 
 function App() {
   return (
@@ -19,6 +20,11 @@ function App() {
         <Alert />
         <Switch>
           <PrivateRoute path="/dashboard" exact component={Dashboard} />
+          <PrivateRoute
+            path="/create-profile"
+            exact
+            component={CreateProfile}
+          />
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />
         </Switch>
