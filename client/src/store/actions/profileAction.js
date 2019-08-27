@@ -10,6 +10,13 @@ export const getProfile = data => {
   };
 };
 
+export const updateProfile = data => {
+  return {
+    type: actionTypes.UPDATE_PROFILE,
+    payload: data
+  };
+};
+
 export const profileError = (errorMsg, errorStatus) => {
   return {
     type: actionTypes.PROFILE_ERROR,
@@ -54,6 +61,33 @@ export const createProfile = (
     if (!edit) {
       history.push("/dashboard");
     }
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(actions.setAlert(error.msg, "danger")));
+    }
+    dispatch(profileError(err.response.statusText, err.response.status));
+  }
+};
+
+//Add experience
+
+export const addExperience = (formData, history) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    const res = await axios.put("/api/profile/experience", formData, config);
+
+    dispatch(updateProfile(res.data));
+
+    dispatch(actions.setAlert("Experience Added", "success"));
+
+    history.push("/dashboard");
   } catch (err) {
     const errors = err.response.data.errors;
 
