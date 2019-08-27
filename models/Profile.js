@@ -56,7 +56,7 @@ const ProfileSchema = Schema({
         default: false
       },
       description: {
-        type: Date
+        type: String
       }
     }
   ],
@@ -86,7 +86,7 @@ const ProfileSchema = Schema({
         default: false
       },
       description: {
-        type: Date
+        type: String
       }
     }
   ],

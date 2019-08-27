@@ -11,6 +11,8 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import PrivateRoute from "./store/utils/PrivateRoute/PrivateRoute";
 import CreateProfile from "./Components/Profile/CreateProfile";
 import EditProfile from "./Components/Profile/EditProfile";
+import AddEducation from "./Components/Profile/AddEducation";
+import AddExperience from "./Components/Profile/AddExperience";
 
 function App() {
   return (
@@ -26,6 +28,12 @@ function App() {
             exact
             component={CreateProfile}
           />
+          <PrivateRoute
+            path="/add-experience"
+            exact
+            component={AddExperience}
+          />
+          <PrivateRoute path="/add-education" exact component={AddEducation} />
           <PrivateRoute path="/edit-profile" exact component={EditProfile} />
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />
