@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import * as actions from "../../store/actions/indexActions";
 
@@ -41,6 +41,12 @@ const CreateProfile = props => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
+  const formSubmitHandler = event => {
+    event.preventDefault();
+
+    props.onCreateProfile(formData, props.history);
+  };
+
   return (
     <Fragment>
       <h1 className="large text-primary">Create Your Profile</h1>
@@ -49,7 +55,7 @@ const CreateProfile = props => {
         profile stand out
       </p>
       <small>* = required field</small>
-      <form className="form">
+      <form className="form" onSubmit={e => formSubmitHandler(e)}>
         <div className="form-group">
           <select name="status" value={status} onChange={e => changeHandler(e)}>
             <option value="0">* Select Professional Status</option>
@@ -208,14 +214,26 @@ const CreateProfile = props => {
         )}
 
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">
+        <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
-        </a>
+        </Link>
       </form>
     </Fragment>
   );
 };
 
-CreateProfile.propTypes = {};
+CreateProfile.propTypes = {
+  onCreateProfile: PropTypes.func.isRequired
+};
 
-export default CreateProfile;
+const mapDispatchToProps = dispatch => {
+  return {
+    onCreateProfile: (userData, history) =>
+      dispatch(actions.createProfile(userData, history))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(CreateProfile));

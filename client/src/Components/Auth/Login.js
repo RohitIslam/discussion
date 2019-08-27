@@ -38,7 +38,7 @@ const Login = props => {
       <p className="lead">
         <i className="fas fa-user"></i> Sign Into Your Account
       </p>
-      <form className="form" onSubmit={e => formSubmitHandler(e)} noValidate>
+      <form className="form" onSubmit={e => formSubmitHandler(e)}>
         <div className="form-group">
           <input
             type="email"
