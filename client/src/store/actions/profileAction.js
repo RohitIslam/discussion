@@ -97,3 +97,30 @@ export const addExperience = (formData, history) => async dispatch => {
     dispatch(profileError(err.response.statusText, err.response.status));
   }
 };
+
+//Add education
+
+export const addEducation = (formData, history) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    const res = await axios.put("/api/profile/education", formData, config);
+
+    dispatch(updateProfile(res.data));
+
+    dispatch(actions.setAlert("Education Added", "success"));
+
+    history.push("/dashboard");
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(actions.setAlert(error.msg, "danger")));
+    }
+    dispatch(profileError(err.response.statusText, err.response.status));
+  }
+};
