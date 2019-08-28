@@ -6,6 +6,7 @@ import * as actions from "../../store/actions/indexActions";
 import Spinner from "../UI/Spinner/Spinner";
 import ProfileTop from "./ProfileTop";
 import ProfileAbout from "./ProfileAbout";
+import ProfileExperience from "./ProfileExperience";
 
 const UserProfile = ({
   match,
@@ -36,6 +37,21 @@ const UserProfile = ({
           <div className="profile-grid my-1">
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
+            <div className="profile-exp bg-white p-2">
+              <h2 className="text-primary">Experience</h2>
+              {profile.experience.length > 0 ? (
+                <Fragment>
+                  {profile.experience.map(experience => (
+                    <ProfileExperience
+                      key={experience._id}
+                      experience={experience}
+                    />
+                  ))}
+                </Fragment>
+              ) : (
+                <h4>No Experience Added</h4>
+              )}
+            </div>
           </div>
         </Fragment>
       )}
