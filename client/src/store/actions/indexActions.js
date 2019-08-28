@@ -9,5 +9,6 @@ export {
   deleteEducation,
   deleteAccountAndProfile,
   getAllProfiles,
-  getProfileByUserId
+  getProfileByUserId,
+  getGithubRepos
 } from "./profileAction";

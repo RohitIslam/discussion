@@ -2,7 +2,6 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import * as actions from "./indexActions";
 
-//Get current Profile
 export const getProfiles = data => {
   return {
     type: actionTypes.GET_PROFILES,
@@ -13,6 +12,13 @@ export const getProfiles = data => {
 export const getProfile = data => {
   return {
     type: actionTypes.GET_PROFILE,
+    payload: data
+  };
+};
+
+export const getGitRepos = data => {
+  return {
+    type: actionTypes.GET_GIT_REPOS,
     payload: data
   };
 };
@@ -41,6 +47,8 @@ export const deleteAccount = () => {
     type: actionTypes.DELETE_ACCOUNT
   };
 };
+
+//Get current Profile
 
 export const getCurrentProfile = () => {
   return async dispatch => {
@@ -74,6 +82,19 @@ export const getProfileByUserId = user_id => {
     try {
       const res = await axios.get(`/api/profile/user/${user_id}`);
       dispatch(getProfile(res.data));
+    } catch (err) {
+      dispatch(profileError(err.response.statusText, err.response.status));
+    }
+  };
+};
+
+// Get GitHub Repos
+
+export const getGithubRepos = username => {
+  return async dispatch => {
+    try {
+      const res = await axios.get(`/api/profile/github/${username}`);
+      dispatch(getGitRepos(res.data));
     } catch (err) {
       dispatch(profileError(err.response.statusText, err.response.status));
     }

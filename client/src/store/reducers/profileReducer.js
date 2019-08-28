@@ -40,6 +40,12 @@ const profileReducer = (currentState = initialState, action) => {
         repos: [],
         loading: false
       };
+    case actionTypes.GET_GIT_REPOS:
+      return {
+        ...currentState,
+        repos: action.payload,
+        loading: false
+      };
     default:
       return currentState;
   }
