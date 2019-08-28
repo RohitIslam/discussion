@@ -11,7 +11,7 @@ export const getPosts = data => {
 
 export const updateLike = (postId, data) => {
   return {
-    type: actionTypes.GET_POSTS,
+    type: actionTypes.UPDATE_LIKES,
     payload: {
       postId,
       likes: data

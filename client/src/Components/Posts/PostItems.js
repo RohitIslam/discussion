@@ -7,7 +7,9 @@ import * as actions from "../../store/actions/indexActions";
 
 const PostItems = ({
   auth,
-  post: { _id, text, name, avatar, user, likes, comments, date }
+  post: { _id, text, name, avatar, user, likes, comments, date },
+  onAddLike,
+  onRemoveLike
 }) => {
   return (
     <div className="post bg-white p-1 my-1">
@@ -22,11 +24,19 @@ const PostItems = ({
         <p className="post-date">
           Posted on <Moment format="YYYY-MM-DD">{date}</Moment>{" "}
         </p>
-        <button type="button" className="btn btn-light">
+        <button
+          onClick={() => onAddLike(_id)}
+          type="button"
+          className="btn btn-light"
+        >
           <i className="fas fa-thumbs-up"></i>{" "}
           <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
         </button>
-        <button type="button" className="btn btn-light">
+        <button
+          onClick={() => onRemoveLike(_id)}
+          type="button"
+          className="btn btn-light"
+        >
           <i className="fas fa-thumbs-down"></i>
         </button>
         <Link to={`/post/${_id}`} className="btn btn-primary">
@@ -47,7 +57,9 @@ const PostItems = ({
 
 PostItems.propTypes = {
   post: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  onAddLike: PropTypes.func.isRequired,
+  onRemoveLike: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -58,7 +70,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetAllProfile: () => dispatch(actions.getAllProfiles())
+    onAddLike: postId => dispatch(actions.addLike(postId)),
+    onRemoveLike: postId => dispatch(actions.removeLike(postId))
   };
 };
 
