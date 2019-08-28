@@ -67,6 +67,19 @@ export const getAllProfiles = () => {
   };
 };
 
+// Get profile by user id
+
+export const getProfileByUserId = user_id => {
+  return async dispatch => {
+    try {
+      const res = await axios.get(`/api/profile/user/${user_id}`);
+      dispatch(getProfile(res.data));
+    } catch (err) {
+      dispatch(profileError(err.response.statusText, err.response.status));
+    }
+  };
+};
+
 //Create or Update profile
 
 export const createProfile = (
