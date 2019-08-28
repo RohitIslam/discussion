@@ -24,6 +24,17 @@ export const profileError = (errorMsg, errorStatus) => {
   };
 };
 
+export const clearProfile = () => {
+  return {
+    type: actionTypes.CLEAR_PROFILE
+  };
+};
+export const deleteAccount = () => {
+  return {
+    type: actionTypes.DELETE_ACCOUNT
+  };
+};
+
 export const getCurrentProfile = () => {
   return async dispatch => {
     try {
@@ -150,5 +161,22 @@ export const deleteEducation = id => async dispatch => {
     dispatch(actions.setAlert("Education Deleted", "success"));
   } catch (err) {
     dispatch(profileError(err.response.statusText, err.response.status));
+  }
+};
+
+// Delete Account and Profile
+
+export const deleteAccountAndProfile = () => async dispatch => {
+  if (window.confirm("Are you sure? This can NOT be undone")) {
+    try {
+      const res = await axios.delete("/api/profile/");
+
+      dispatch(clearProfile());
+      dispatch(deleteAccount());
+
+      dispatch(actions.setAlert("Account Deleted Permanently", "success"));
+    } catch (err) {
+      dispatch(profileError(err.response.statusText, err.response.status));
+    }
   }
 };

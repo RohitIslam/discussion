@@ -4,5 +4,8 @@ export {
   getCurrentProfile,
   createProfile,
   addExperience,
-  addEducation
+  addEducation,
+  deleteExperience,
+  deleteEducation,
+  deleteAccountAndProfile
 } from "./profileAction";
