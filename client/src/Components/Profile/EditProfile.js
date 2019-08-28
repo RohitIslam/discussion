@@ -179,7 +179,7 @@ const EditProfile = props => {
           <input
             type="text"
             placeholder="Github Username"
-            name="githubusername"
+            name="githubUserName"
             value={githubUserName}
             onChange={e => changeHandler(e)}
           />
