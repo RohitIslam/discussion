@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/indexActions";
 import Spinner from "../UI/Spinner/Spinner";
 import ProfileTop from "./ProfileTop";
+import ProfileAbout from "./ProfileAbout";
 
 const UserProfile = ({
   match,
@@ -32,8 +33,9 @@ const UserProfile = ({
                 <i className="fas fa-user-circle text-primary"></i> Edit Profile
               </Link>
             )}
-          <div class="profile-grid my-1">
+          <div className="profile-grid my-1">
             <ProfileTop profile={profile} />
+            <ProfileAbout profile={profile} />
           </div>
         </Fragment>
       )}
