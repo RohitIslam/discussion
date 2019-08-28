@@ -12,4 +12,4 @@ export {
   getProfileByUserId,
   getGithubRepos
 } from "./profileAction";
-export { getAllPosts } from "./postAction";
+export { getAllPosts, addLike, removeLike } from "./postAction";

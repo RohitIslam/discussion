@@ -9,6 +9,16 @@ export const getPosts = data => {
   };
 };
 
+export const updateLike = (postId, data) => {
+  return {
+    type: actionTypes.GET_POSTS,
+    payload: {
+      postId,
+      likes: data
+    }
+  };
+};
+
 export const postError = (errorMsg, errorStatus) => {
   return {
     type: actionTypes.POST_ERROR,
@@ -21,6 +31,26 @@ export const getAllPosts = () => async dispatch => {
   try {
     const res = await axios.get("/api/posts");
     dispatch(getPosts(res.data));
+  } catch (err) {
+    dispatch(postError(err.response.statusText, err.response.status));
+  }
+};
+
+//Add like
+export const addLike = post_id => async dispatch => {
+  try {
+    const res = await axios.put(`/api/posts/like/${post_id}`);
+    dispatch(updateLike(post_id, res.data));
+  } catch (err) {
+    dispatch(postError(err.response.statusText, err.response.status));
+  }
+};
+
+//Remove like
+export const removeLike = post_id => async dispatch => {
+  try {
+    const res = await axios.put(`/api/posts/unlike/${post_id}`);
+    dispatch(updateLike(post_id, res.data));
   } catch (err) {
     dispatch(postError(err.response.statusText, err.response.status));
   }
