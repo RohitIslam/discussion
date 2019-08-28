@@ -13,6 +13,7 @@ import CreateProfile from "./Components/Profile/CreateProfile";
 import EditProfile from "./Components/Profile/EditProfile";
 import AddEducation from "./Components/Profile/AddEducation";
 import AddExperience from "./Components/Profile/AddExperience";
+import Profiles from "./Components/Profiles/Profiles";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <PrivateRoute path="/edit-profile" exact component={EditProfile} />
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />
+          <Route path="/profiles" exact component={Profiles} />
         </Switch>
       </section>
     </Fragment>
