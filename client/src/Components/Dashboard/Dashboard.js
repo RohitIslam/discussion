@@ -8,7 +8,12 @@ import ManageProfileOptions from "../Profile/ManageProfileOptions";
 import ExperienceDashboard from "./ExperienceDashboard";
 import EducationDashboard from "./EducationDashboard";
 
-const Dashboard = ({ onGetCurrentProfile, auth, profile }) => {
+const Dashboard = ({
+  onGetCurrentProfile,
+  auth,
+  profile,
+  onDeleteAccountAndProfile
+}) => {
   useEffect(() => {
     onGetCurrentProfile();
   }, []);
@@ -26,6 +31,14 @@ const Dashboard = ({ onGetCurrentProfile, auth, profile }) => {
           <ManageProfileOptions />
           <ExperienceDashboard experiences={profile.profile.experience} />
           <EducationDashboard educations={profile.profile.education} />
+          <div className="my-2">
+            <button
+              className="btn btn-danger"
+              onClick={() => onDeleteAccountAndProfile()}
+            >
+              <i className="fas fa-user-minus"></i> Delete My Account
+            </button>
+          </div>
         </Fragment>
       ) : (
         <Fragment>
@@ -41,6 +54,7 @@ const Dashboard = ({ onGetCurrentProfile, auth, profile }) => {
 
 Dashboard.propTypes = {
   onGetCurrentProfile: PropTypes.func.isRequired,
+  onDeleteAccountAndProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired
 };
@@ -54,7 +68,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetCurrentProfile: () => dispatch(actions.getCurrentProfile())
+    onGetCurrentProfile: () => dispatch(actions.getCurrentProfile()),
+    onDeleteAccountAndProfile: () => dispatch(actions.deleteAccountAndProfile())
   };
 };
 
