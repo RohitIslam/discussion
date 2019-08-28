@@ -3,6 +3,13 @@ import axios from "axios";
 import * as actions from "./indexActions";
 
 //Get current Profile
+export const getProfiles = data => {
+  return {
+    type: actionTypes.GET_PROFILES,
+    payload: data
+  };
+};
+
 export const getProfile = data => {
   return {
     type: actionTypes.GET_PROFILE,
@@ -38,9 +45,22 @@ export const deleteAccount = () => {
 export const getCurrentProfile = () => {
   return async dispatch => {
     try {
-      // dispatch(profileLoading());
       const res = await axios.get("/api/profile/me");
       dispatch(getProfile(res.data));
+    } catch (err) {
+      dispatch(profileError(err.response.statusText, err.response.status));
+    }
+  };
+};
+
+// Get all profiles
+
+export const getAllProfiles = () => {
+  return async dispatch => {
+    dispatch(clearProfile());
+    try {
+      const res = await axios.get("/api/profile");
+      dispatch(getProfiles(res.data));
     } catch (err) {
       dispatch(profileError(err.response.statusText, err.response.status));
     }
