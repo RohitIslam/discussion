@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import * as actions from "../../store/actions/indexActions";
 
 const Navbar = props => {
