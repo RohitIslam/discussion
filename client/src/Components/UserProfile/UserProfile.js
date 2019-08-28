@@ -7,6 +7,7 @@ import Spinner from "../UI/Spinner/Spinner";
 import ProfileTop from "./ProfileTop";
 import ProfileAbout from "./ProfileAbout";
 import ProfileExperience from "./ProfileExperience";
+import ProfileEducation from "./ProfileEducation";
 
 const UserProfile = ({
   match,
@@ -50,6 +51,22 @@ const UserProfile = ({
                 </Fragment>
               ) : (
                 <h4>No Experience Added</h4>
+              )}
+            </div>
+
+            <div className="profile-edu bg-white p-2">
+              <h2 className="text-primary">Education</h2>
+              {profile.education.length > 0 ? (
+                <Fragment>
+                  {profile.education.map(education => (
+                    <ProfileEducation
+                      key={education._id}
+                      education={education}
+                    />
+                  ))}
+                </Fragment>
+              ) : (
+                <h4>No Education Added</h4>
               )}
             </div>
           </div>
