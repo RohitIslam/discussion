@@ -18,7 +18,12 @@ const EducationDashboard = props => {
         )}
       </td>
       <td>
-        <button className="btn btn-danger">Delete</button>
+        <button
+          className="btn btn-danger"
+          onClick={() => props.onDeleteEducation(education._id)}
+        >
+          Delete
+        </button>
       </td>
     </tr>
   ));
@@ -41,7 +46,17 @@ const EducationDashboard = props => {
   );
 };
 EducationDashboard.propTypes = {
-  educations: PropTypes.array.isRequired
+  educations: PropTypes.array.isRequired,
+  onDeleteEducation: PropTypes.func.isRequired
 };
 
-export default connect()(EducationDashboard);
+const mapDispatchToProps = dispatch => {
+  return {
+    onDeleteEducation: id => dispatch(actions.deleteEducation(id))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(EducationDashboard);
