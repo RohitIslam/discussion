@@ -18,3 +18,6 @@ export const PROFILE_ERROR = "PROFILE_ERROR";
 export const GET_GIT_REPOS = "GET_GIT_REPOS";
 
 export const DELETE_ACCOUNT = "DELETE_ACCOUNT";
+
+export const GET_POSTS = "GET_POSTS";
+export const POST_ERROR = "POST_ERROR";
