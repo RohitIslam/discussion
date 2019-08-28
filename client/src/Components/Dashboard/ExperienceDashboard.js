@@ -18,7 +18,12 @@ const ExperienceDashboard = props => {
         )}
       </td>
       <td>
-        <button className="btn btn-danger">Delete</button>
+        <button
+          className="btn btn-danger"
+          onClick={() => props.onDeleteExperience(experience._id)}
+        >
+          Delete
+        </button>
       </td>
     </tr>
   ));
@@ -42,20 +47,17 @@ const ExperienceDashboard = props => {
 };
 
 ExperienceDashboard.propTypes = {
-  experiences: PropTypes.array.isRequired
+  experiences: PropTypes.array.isRequired,
+  onDeleteExperience: PropTypes.func.isRequired
 };
 
-// const mapStateToProps = state => {
-//   return {
-//     auth: state.auth,
-//     profile: state.profile
-//   };
-// };
+const mapDispatchToProps = dispatch => {
+  return {
+    onDeleteExperience: id => dispatch(actions.deleteExperience(id))
+  };
+};
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onGetCurrentProfile: () => dispatch(actions.getCurrentProfile())
-//   };
-// };
-
-export default connect()(ExperienceDashboard);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ExperienceDashboard);
