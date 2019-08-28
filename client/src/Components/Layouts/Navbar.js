@@ -6,49 +6,58 @@ import * as actions from "../../store/actions/indexActions";
 
 const Navbar = props => {
   const authLinks = (
-    <ul>
-      <li>
-        <Link to="/profiles">Developers</Link>
-      </li>
-      <li>
-        <Link to="/posts">Posts</Link>
-      </li>
-      <li>
-        <Link to="/dashboard">
-          <i className="fas fa-user" />{" "}
-          <span className="hide-sm">Dashboard</span>
+    <Fragment>
+      <h1>
+        <Link to="/posts">
+          <i className="fas fa-sitemap"></i> Discussion
         </Link>
-      </li>
-      <li>
-        <Link to="/login" onClick={props.onLogout}>
-          <i className="fas fa-sign-out-alt" />{" "}
-          <span className="hide-sm">Logout</span>
-        </Link>
-      </li>
-    </ul>
+      </h1>
+      <ul>
+        <li>
+          <Link to="/profiles">Developers</Link>
+        </li>
+        <li>
+          <Link to="/posts">Posts</Link>
+        </li>
+        <li>
+          <Link to="/dashboard">
+            <i className="fas fa-user" />{" "}
+            <span className="hide-sm">Dashboard</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/login" onClick={props.onLogout}>
+            <i className="fas fa-sign-out-alt" />{" "}
+            <span className="hide-sm">Logout</span>
+          </Link>
+        </li>
+      </ul>
+    </Fragment>
   );
 
   const guestLinks = (
-    <ul>
-      <li>
-        <Link to="/profiles">Developers</Link>
-      </li>
-      <li>
-        <Link to="/register">Register</Link>
-      </li>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
-    </ul>
-  );
-
-  return (
-    <nav className="navbar bg-dark">
+    <Fragment>
       <h1>
         <Link to="/">
           <i className="fas fa-sitemap"></i> Discussion
         </Link>
       </h1>
+      <ul>
+        <li>
+          <Link to="/profiles">Developers</Link>
+        </li>
+        <li>
+          <Link to="/register">Register</Link>
+        </li>
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      </ul>
+    </Fragment>
+  );
+
+  return (
+    <nav className="navbar bg-dark">
       {!props.auth.loading && (
         <Fragment>
           {props.auth.isAuthenticated ? authLinks : guestLinks}{" "}
