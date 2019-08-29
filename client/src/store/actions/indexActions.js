@@ -1,5 +1,7 @@
 export { setAlert } from "./alertAction";
+
 export { register, userLoaded, login, logout } from "./authAction";
+
 export {
   getCurrentProfile,
   createProfile,
@@ -12,4 +14,11 @@ export {
   getProfileByUserId,
   getGithubRepos
 } from "./profileAction";
-export { getAllPosts, addLike, removeLike, deletePost } from "./postAction";
+
+export {
+  getAllPosts,
+  addLike,
+  removeLike,
+  deletePost,
+  addPost
+} from "./postAction";

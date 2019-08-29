@@ -45,7 +45,7 @@ const AddEducation = props => {
         that you have attended
       </p>
       <small>* = required field</small>
-      <form className="form" onSubmit={e => formSubmitHandler(e)} noValidate>
+      <form className="form" onSubmit={e => formSubmitHandler(e)}>
         <div className="form-group">
           <input
             type="text"
