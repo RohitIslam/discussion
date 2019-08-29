@@ -11,7 +11,7 @@ const postReducer = (currentState = initialState, action) => {
     case actionTypes.ADD_POST:
       return {
         ...currentState,
-        posts: [...currentState.posts, action.payload],
+        posts: [action.payload, ...currentState.posts],
         loading: false
       };
     case actionTypes.GET_POSTS:

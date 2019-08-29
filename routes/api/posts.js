@@ -18,9 +18,7 @@ const Post = require("../../models/Post");
 
 router.get("/", async (req, res) => {
   try {
-    const posts = await Post.find()
-      .sort({ date: -1 }) //latest posts will appear first
-      .populate("user", ["name", "avatar"]);
+    const posts = await Post.find().sort({ date: -1 }); //latest posts will appear first
     res.json(posts);
   } catch (err) {
     console.log(err.message);
