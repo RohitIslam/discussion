@@ -8,6 +8,12 @@ const initialState = {
 
 const postReducer = (currentState = initialState, action) => {
   switch (action.type) {
+    case actionTypes.ADD_POST:
+      return {
+        ...currentState,
+        posts: [...currentState.posts, action.payload],
+        loading: false
+      };
     case actionTypes.GET_POSTS:
       return {
         ...currentState,

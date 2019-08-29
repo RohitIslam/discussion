@@ -19,6 +19,7 @@ export const GET_GIT_REPOS = "GET_GIT_REPOS";
 
 export const DELETE_ACCOUNT = "DELETE_ACCOUNT";
 
+export const ADD_POST = "ADD_POST";
 export const GET_POSTS = "GET_POSTS";
 export const POST_ERROR = "POST_ERROR";
 export const UPDATE_LIKES = "UPDATE_LIKES";
