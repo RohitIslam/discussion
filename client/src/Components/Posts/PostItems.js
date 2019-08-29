@@ -9,7 +9,8 @@ const PostItems = ({
   auth,
   post: { _id, text, name, avatar, user, likes, comments, date },
   onAddLike,
-  onRemoveLike
+  onRemoveLike,
+  onDeletePost
 }) => {
   return (
     <div className="post bg-white p-1 my-1">
@@ -45,8 +46,12 @@ const PostItems = ({
             <span className="comment-count">{comments.length}</span>
           )}
         </Link>
-        {!auth.loading && user === auth.user._id && (
-          <button type="button" className="btn btn-danger">
+        {!auth.loading && user._id === auth.user._id && (
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => onDeletePost(_id)}
+          >
             <i className="fas fa-times"></i>
           </button>
         )}
@@ -59,7 +64,8 @@ PostItems.propTypes = {
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   onAddLike: PropTypes.func.isRequired,
-  onRemoveLike: PropTypes.func.isRequired
+  onRemoveLike: PropTypes.func.isRequired,
+  onDeletePost: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -71,7 +77,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onAddLike: postId => dispatch(actions.addLike(postId)),
-    onRemoveLike: postId => dispatch(actions.removeLike(postId))
+    onRemoveLike: postId => dispatch(actions.removeLike(postId)),
+    onDeletePost: postId => dispatch(actions.deletePost(postId))
   };
 };
 
