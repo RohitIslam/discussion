@@ -16,6 +16,7 @@ import AddExperience from "./Components/Profile/AddExperience";
 import Profiles from "./Components/Profiles/Profiles";
 import UserProfile from "./Components/UserProfile/UserProfile";
 import Posts from "./Components/Posts/Posts";
+import Post from "./Components/Post/Post";
 
 function App() {
   return (
@@ -38,7 +39,9 @@ function App() {
           />
           <PrivateRoute path="/add-education" exact component={AddEducation} />
           <PrivateRoute path="/edit-profile" exact component={EditProfile} />
+          <PrivateRoute path="/post/:id" exact component={Post} />
           <PrivateRoute path="/posts" exact component={Posts} />
+
           <Route path="/profile/:id" exact component={UserProfile} />
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />
