@@ -17,6 +17,7 @@ import Profiles from "./Components/Profiles/Profiles";
 import UserProfile from "./Components/UserProfile/UserProfile";
 import Posts from "./Components/Posts/Posts";
 import Post from "./Components/Post/Post";
+// import Footer from "./Components/Layouts/Footer";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
           <Route path="/profiles" exact component={Profiles} />
         </Switch>
       </section>
+      {/* <Footer /> */}
     </Fragment>
   );
 }
