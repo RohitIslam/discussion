@@ -48,6 +48,23 @@ const postReducer = (currentState = initialState, action) => {
         posts: currentState.posts.filter(post => post._id !== action.payload),
         loading: false
       };
+    case actionTypes.ADD_COMMENT:
+      return {
+        ...currentState,
+        post: { comments: action.payload, ...currentState.post },
+        loading: false
+      };
+    case actionTypes.DELETE_POST:
+      return {
+        ...currentState,
+        post: {
+          ...currentState.posts,
+          comments: currentState.post.comments.filter(
+            coment => coment._id !== action.payload
+          )
+        },
+        loading: false
+      };
     default:
       return currentState;
   }
