@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/indexActions";
 
-const PostForm = props => {
+const CommentForm = props => {
   const [text, setText] = useState("");
 
   const changeHandler = event => {
@@ -12,14 +12,14 @@ const PostForm = props => {
   const formSubmitHandler = event => {
     event.preventDefault();
 
-    props.onAddPost({ text });
+    props.onAddComment({ text }, props.postId);
 
     setText("");
   };
   return (
     <div className="post-form">
       <div className="bg-primary p">
-        <h3>Say Something...</h3>
+        <h3>Leave a comment</h3>
       </div>
       <form className="form my-1" onSubmit={e => formSubmitHandler(e)}>
         <textarea
@@ -39,11 +39,12 @@ const PostForm = props => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddPost: formData => dispatch(actions.addPost(formData))
+    onAddComment: (formData, postId) =>
+      dispatch(actions.addComment(formData, postId))
   };
 };
 
 export default connect(
   null,
   mapDispatchToProps
-)(PostForm);
+)(CommentForm);
