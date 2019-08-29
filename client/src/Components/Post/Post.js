@@ -6,6 +6,7 @@ import * as actions from "../../store/actions/indexActions";
 import Spinner from "../UI/Spinner/Spinner";
 import PostItems from "../Posts/PostItems";
 import CommentForm from "./CommentForm";
+import CommentItems from "./CommentItems";
 
 const Post = ({ onGetPost, post: { post, loading }, match }) => {
   useEffect(() => {
@@ -23,6 +24,15 @@ const Post = ({ onGetPost, post: { post, loading }, match }) => {
           </Link>
           <PostItems post={post} showActions={false} />
           <CommentForm postId={post._id} />
+          <div className="comments">
+            {post.comments.map(comment => (
+              <CommentItems
+                key={comment._id}
+                comment={comment}
+                postId={post._id}
+              />
+            ))}
+          </div>
         </Fragment>
       )}
     </Fragment>

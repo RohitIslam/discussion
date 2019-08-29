@@ -126,7 +126,7 @@ router.post(
 
       await post.save();
 
-      res.json(post);
+      res.json(post.comments);
     } catch (err) {
       console.log(err.message);
       res.status(500).send("Server error");
@@ -243,14 +243,14 @@ router.delete("/comment/:post_id/:comment_id", auth, async (req, res) => {
       comment => comment.id === req.params.comment_id
     );
 
+    // check if comment exist or not
+    if (!comment) {
+      return res.status(404).json({ msg: "Comment does not exist" });
+    }
+
     // check for the user
     if (comment.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: "User Not Authorized" });
-    }
-
-    // check id comment exist or not
-    if (!comment) {
-      return res.status(404).json({ msg: "Comment does not exist" });
     }
 
     //Get remove index
